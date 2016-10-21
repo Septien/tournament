@@ -5,3 +5,10 @@
 --
 -- You can write comments in this file by starting them with two dashes, like
 -- these lines here.
+
+CREATE TABle player (
+	ID SERIAL PRIMARY KEY,
+	name TEXT,
+	wins INT, 
+	matches INT
+);
