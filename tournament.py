@@ -85,6 +85,19 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+    DB = connect()
+    c = DB.cursor()
+    #Update winner
+    c.execute("SELECT wins, matches FROM player WHERE ID = %d;" % winner )
+    r = c.fetchall()
+    c.execute("UPDATE player SET wins = %s WHERE ID = %s;", (int(r[0][0]) + 1, winner))
+    c.execute("UPDATE player SET matches = %s WHERE ID = %s;", (int(r[0][1]) + 1, winner))
+    #Update loser
+    c.execute("SELECT matches FROM player WHERE ID = %s;", (loser,))
+    r = c.fetchall()
+    c.execute("UPDATE player SET matches = %s WHERE ID = %s;", (int(r[0][0]) + 1, loser))
+    DB.commit()
+    DB.close()
  
  
 def swissPairings():
